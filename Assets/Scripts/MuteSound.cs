@@ -20,13 +20,12 @@ public class MuteSound : MonoBehaviour
         sound = player.GetComponent<AudioSource>();
 
         //mute and unmute the sound on first load
-        sound.mute = (PlayerPrefs.GetInt("mute") == 1);
+        sound.mute = (PlayerPrefs.GetInt("enable_sound") == 0);
 
         //Change icon texture
         icon = this.GetComponent<Image>();
-       // on = Resources.Load("megaphone") as Sprite;
-       // off = Resources.Load("megaphoneOff") as Sprite;
-        if (PlayerPrefs.GetInt("mute") == 0)
+
+        if (PlayerPrefs.GetInt("enable_sound") == 1)
         { icon.overrideSprite = off; }
         else { icon.overrideSprite = null; }
 
@@ -39,7 +38,7 @@ public class MuteSound : MonoBehaviour
     void TaskOnClick()
     {
         //is the game currently muted?
-        int i = PlayerPrefs.GetInt("mute");
+        int i = PlayerPrefs.GetInt("enable_sound");
 
         //change the status of muting
         if (i == 1)
@@ -47,13 +46,13 @@ public class MuteSound : MonoBehaviour
         else { i = 1; }
 
         //save the status of muting
-        PlayerPrefs.SetInt("mute", i);
+        PlayerPrefs.SetInt("enable_sound", i);
 
         //mute game
-        sound.mute = (PlayerPrefs.GetInt("mute") == 1);
+        sound.mute = (PlayerPrefs.GetInt("enable_sound") == 0);
 
         //Change icon
-        if (PlayerPrefs.GetInt("mute") == 0)
+        if (PlayerPrefs.GetInt("mute") == 1)
         { icon.overrideSprite = off; }
         else { icon.overrideSprite = null; }
     }

@@ -4,7 +4,6 @@ using System.Collections;
 
 public class Score : MonoBehaviour
 {
-    Gyroscope m_Gyro;
     public int score = 0;
     int completion;
     Text text;
@@ -14,8 +13,6 @@ public class Score : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        m_Gyro = Input.gyro;
-        m_Gyro.enabled = true;
         gameOn = true;
         text = GetComponent<Text>();
         //transform.position = new Vector3(distance.x, transform.position.y, transform.position.z);
@@ -40,8 +37,8 @@ public class Score : MonoBehaviour
 
             CalculateLevel();
 
-            //text.text = "Score: " + score;
-            text.text = "here" + m_Gyro.enabled + pos;
+            text.text = "Score: " + score;
+            //text.text = "here" + m_Gyro.enabled + pos;
             framerate = 0;
         }
             framerate++;

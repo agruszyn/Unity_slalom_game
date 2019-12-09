@@ -591,13 +591,14 @@ public class Hazards : MonoBehaviour {
 
     public void SpitHazards()
     {
-          randomFillPercent = 5;
-          percentLayerTwo = 25;
-          percentLayerThree = 25;
-    openHazards = GameObject.FindGameObjectsWithTag("disabled");
+        randomFillPercent = 5;
+        percentLayerTwo = 25;
+        percentLayerThree = 25;
+        openHazards = GameObject.FindGameObjectsWithTag("disabled");
         countHazards = openHazards.Length;
         if (mahRotation.transform.rotation.x - change <= -0.00124)
         {
+            Debug.Log("spitting");
             change = mahRotation.transform.rotation.x;
             seed = Time.time.ToString();
             System.Random pseudoRandom = new System.Random(seed.GetHashCode());
