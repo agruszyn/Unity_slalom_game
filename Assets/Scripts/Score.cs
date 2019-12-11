@@ -10,6 +10,7 @@ public class Score : MonoBehaviour
     private bool gameOn;
     private int framerate = 0;
     public int level = 0;
+    public int total_level = 0;
     // Use this for initialization
     void Start()
     {
@@ -32,7 +33,7 @@ public class Score : MonoBehaviour
             if (gameOn == true)
             {
                 score = score + 1;
-                completion = score - (level * 150);
+                completion = score - (total_level * 150);
             }
 
             CalculateLevel();
@@ -55,7 +56,15 @@ public class Score : MonoBehaviour
     void CalculateLevel()
     {
         if (completion > 150)
+        {
             level++;
+            total_level++;
+            if (level > 3)
+            {
+                level = 0;
+            }
+
+        }
     }
 
     public void HighScore()

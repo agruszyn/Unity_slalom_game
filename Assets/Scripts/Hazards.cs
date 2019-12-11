@@ -91,7 +91,7 @@ public class Hazards : MonoBehaviour {
         topZ = GetOrientedz((float)(69), 3);
         initializeHazard();
         qHazardRotation.eulerAngles = new Vector3((int)(69 * cubedegree), 0, 0);
-        change = mahRotation.transform.rotation.x;
+        change = mahRotation.transform.rotation.eulerAngles.x;
         MapHazard();
     }
 	
@@ -114,17 +114,33 @@ public class Hazards : MonoBehaviour {
         }
         hazardlevel = level.level;
         if (head.starthover != true)
-        {
+            {
             // RecycleHazard();
             //ReplaceHazard();
             if (hazardlevel < 1 )
             { PatternHazard(); }
-            if (hazardlevel >= 1)
+            if (hazardlevel == 1 || hazardlevel == 2)
             { MakePath(); }
             }
         else if (head.starthover == true)
-        { SpitHazards(); }
+            {
+            firstcycle = false;
+            go = false;
+            funnelsize = 40;
+            slope = 0.0f;
+            target = 0.0f;
+            location = 0.0f;
+            acceleration = 0.0f;
+            distance = 0;
+            targetdistance = 0;
+            sign = 0.00f;
+            startpos = 0.0f;
+            firstcycle = false;
+
+            SpitHazards(); 
+            }
     }
+
 
     public float GetOrientedy(float local, int layer)
     {
@@ -437,15 +453,17 @@ public class Hazards : MonoBehaviour {
 
     public void PatternHazard()
     {
+
         //find blocks that have been removed from play
         openHazards = GameObject.FindGameObjectsWithTag("disabled");
         countHazards = openHazards.Length;
         if (countHazards > 350)
         { go = true; }
+        Debug.Log(mahRotation.transform.rotation.eulerAngles.x);
         //if there is enough available then recycle the box's back in
-        if (go == true && mahRotation.transform.rotation.x - change <= -0.00124)
+        if (go == true && Mathf.Abs(mahRotation.transform.rotation.eulerAngles.x - change) >= 0.2)
         {
-            change = mahRotation.transform.rotation.x;
+            change = mahRotation.transform.rotation.eulerAngles.x;
             //Debug.Log(iteration);
             for (int x = 0; x <= 100; x++)
             {
@@ -533,16 +551,16 @@ public class Hazards : MonoBehaviour {
         { go = true;
         }
 
-        if (go == true && mahRotation.transform.rotation.x - change <= -0.00124)
+        if (go == true && Mathf.Abs(mahRotation.transform.rotation.eulerAngles.x - change) >= 0.2)
         {
             if (funnelsize > size)
             {
-                change = mahRotation.transform.rotation.x;
+                change = mahRotation.transform.rotation.eulerAngles.x;
                 funnelsize = Funnel(funnelsize);
             }
             else
             {
-                change = mahRotation.transform.rotation.x;
+                change = mahRotation.transform.rotation.eulerAngles.x;
 
                 seed = Time.time.ToString();
                 System.Random pseudoRandom = new System.Random(seed.GetHashCode());
@@ -596,10 +614,10 @@ public class Hazards : MonoBehaviour {
         percentLayerThree = 25;
         openHazards = GameObject.FindGameObjectsWithTag("disabled");
         countHazards = openHazards.Length;
-        if (mahRotation.transform.rotation.x - change <= -0.00124)
+        if (Mathf.Abs(mahRotation.transform.rotation.eulerAngles.x - change) >= 0.2)
         {
             Debug.Log("spitting");
-            change = mahRotation.transform.rotation.x;
+            change = mahRotation.transform.rotation.eulerAngles.x;
             seed = Time.time.ToString();
             System.Random pseudoRandom = new System.Random(seed.GetHashCode());
             //offset = -Mathf.Round(manager.fUserOffsetT);

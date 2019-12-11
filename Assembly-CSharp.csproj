@@ -74,6 +74,7 @@
      <Compile Include="Assets\Scripts\Rotate.cs" />
      <Compile Include="Assets\Scripts\Score.cs" />
      <Compile Include="Assets\Scripts\SelfDestruct.cs" />
+     <Compile Include="Assets\Scripts\SkyboxCamera.cs" />
      <Compile Include="Assets\Scripts\Tile_organizer.cs" />
      <Compile Include="Assets\Scripts\Tile_organizer_menu.cs" />
      <Compile Include="Assets\Scripts\TranslateObstacles.cs" />

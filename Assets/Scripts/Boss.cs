@@ -16,7 +16,7 @@ public class Boss : MonoBehaviour {
     public float zdir;
     public bool inPos = true;
     public bool starthover;
-    public int savedlevel;
+    public bool first_cycle_done;
 
     // Use this for initialization
     void Start ()
@@ -26,19 +26,29 @@ public class Boss : MonoBehaviour {
         destination = parkpos;
         Score = GameObject.Find("Score");
         level = Score.GetComponent<Score>();
-        savedlevel = level.level;
+        //savedlevel = level.level;
     }
 
     private void Update()
     {
         if (PlayerPrefs.GetInt("pause") == 0)
         {
-            if (level.level == 3 && savedlevel == 0)
-            {
-                destination = attackpos;
+            if (level.level == 3) {
+                if (first_cycle_done == false) {
+                    {
+                        destination = attackpos;
+                        inPos = false;
+                        starthover = false;
+                        first_cycle_done = true;
+                    }
+                }
+            }
+            else if (destination == attackpos)
+            { 
+                first_cycle_done = false;
+                destination = parkpos;
                 inPos = false;
                 starthover = false;
-                savedlevel = 1;
             }
         }
     }
@@ -68,7 +78,7 @@ public class Boss : MonoBehaviour {
 
     void MoveTo()
     {
-        if (destination.x - transform.position.x <= speed)
+        if (Mathf.Abs(destination.x - transform.position.x) <= speed)
         { xdir = destination.x; }
         else if (destination.x - transform.position.x < 0)
         { xdir = (-1 * speed) + transform.position.x; }
@@ -76,7 +86,7 @@ public class Boss : MonoBehaviour {
         { xdir = (1 * speed) + transform.position.x; }
         //Debug.Log(transform.position.x == xdir);
 
-        if ((destination.y - transform.position.y) < speed)
+        if (Mathf.Abs(destination.y - transform.position.y) <= speed)
         { ydir = destination.y; }
         else if (destination.y - transform.position.y < 0)
         { ydir = (-1 * speed) + transform.position.y; }
@@ -84,7 +94,7 @@ public class Boss : MonoBehaviour {
         { ydir = (1 * speed) + transform.position.y; }
 
 
-        if (destination.z - transform.position.z < speed)
+        if (Mathf.Abs(destination.z - transform.position.z) <= speed)
         { zdir = destination.z; }
         else if (destination.z - transform.position.z < 0)
         { zdir = (-1 * speed) + transform.position.z; }
