@@ -459,7 +459,7 @@ public class Hazards : MonoBehaviour {
         countHazards = openHazards.Length;
         if (countHazards > 350)
         { go = true; }
-        Debug.Log(mahRotation.transform.rotation.eulerAngles.x);
+        //Debug.Log(mahRotation.transform.rotation.eulerAngles.x);
         //if there is enough available then recycle the box's back in
         if (go == true && Mathf.Abs(mahRotation.transform.rotation.eulerAngles.x - change) >= 0.2)
         {
@@ -616,7 +616,7 @@ public class Hazards : MonoBehaviour {
         countHazards = openHazards.Length;
         if (Mathf.Abs(mahRotation.transform.rotation.eulerAngles.x - change) >= 0.2)
         {
-            Debug.Log("spitting");
+            //Debug.Log("spitting");
             change = mahRotation.transform.rotation.eulerAngles.x;
             seed = Time.time.ToString();
             System.Random pseudoRandom = new System.Random(seed.GetHashCode());

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Game_Master : MonoBehaviour
 {
@@ -75,7 +76,7 @@ public class Game_Master : MonoBehaviour
                    {
                         if (Input.GetTouch(i).phase == TouchPhase.Ended && PlayerPrefs.GetInt("pause") == 0 && level.score > 5)
                         {
-                            PlayerPrefs.SetInt("pause", 1);
+                            //PlayerPrefs.SetInt("pause", 1);
                         }
                     }
                 }
@@ -131,10 +132,19 @@ public class Game_Master : MonoBehaviour
             fUserOffsetx = 0;
         }  
         }
+    public void pause_Game()
+    {
+        PlayerPrefs.SetInt("pause", 1);
     }
-
-       
-
+    public void resume_Game()
+    {
+        PlayerPrefs.SetInt("pause", 0);
+    }
+    public void leave_Game()
+    {
+        SceneManager.LoadScene(0);
+    }
+}
 
     
 

@@ -10,6 +10,7 @@ public class MotionControl : MonoBehaviour {
     public float multiplierSpeed;
     public float strafeDebug;
     public Vector3 tumble;
+    //public Vector3 g = new Vector3(0, 0, 0);
 
     //private GameManager center;
     //private CardboardHead viewPort;
@@ -21,18 +22,21 @@ public class MotionControl : MonoBehaviour {
     public bool bWait;
     private float fStartTime;
     public bool vrMode;
-
+    public bool left_button_pressed = false;
+    public bool right_button_pressed = false;
+    public Vector3 pos;
 
     void Start()
     {
         scoreboard = GameObject.Find("Score");
         myScore = scoreboard.GetComponent<Score>();
-        vrMode = PlayerPrefs.GetInt("VRmode") == 1;
+        vrMode = false; //PlayerPrefs.GetInt("VRmode") == 1;
         //viewPort = GetComponentInChildren<CardboardHead>();
         orientation.y = 0;
         world = GetComponentInParent<Game_Master>();
         speed = GetComponentInParent<TranslatePlayer>();
         strafeScale = 0.01f + speed.jetSpeed * 0.002f;
+        Input.gyro.enabled = true;
     }
     //void Update()
     //   {
@@ -43,7 +47,6 @@ public class MotionControl : MonoBehaviour {
     {
         if (PlayerPrefs.GetInt("pause") == 0)
         {
-            vrMode = PlayerPrefs.GetInt("VRmode") == 1;
 
             if (this.tag != "tumbling" && this.tag != "dead")
             {
@@ -55,15 +58,17 @@ public class MotionControl : MonoBehaviour {
             }
             transform.position = new Vector3(0, transform.position.y, transform.position.z);
             world.fUserOffsetx = world.fUserOffsetx + angularDirection * strafeScale;
-            if (Input.GetKey("right"))
+            if (Input.GetKey("right") || right_button_pressed)
             {
-                world.fUserOffsetx = world.fUserOffsetx - 45 * strafeScale;
-                world.fUserOffsetT = world.fUserOffsetT - 45 * strafeScale;
+                //world.fUserOffsetx = world.fUserOffsetx - 45 * strafeScale;
+                //world.fUserOffsetT = world.fUserOffsetT - 45 * strafeScale;
+                go_Right(world);
             }
-            else if (Input.GetKey("left"))
+            else if (Input.GetKey("left") || left_button_pressed)
             {
-                world.fUserOffsetx = world.fUserOffsetx + 45 * strafeScale;
-                world.fUserOffsetT = world.fUserOffsetT + 45 * strafeScale;
+                //world.fUserOffsetx = world.fUserOffsetx + 45 * strafeScale;
+                //world.fUserOffsetT = world.fUserOffsetT + 45 * strafeScale;
+                go_Left(world);
                 // Debug.Log("LEFT!");
             }
             world.fUserOffsetT = world.fUserOffsetT + angularDirection * strafeScale;
@@ -84,8 +89,8 @@ public class MotionControl : MonoBehaviour {
 
     public void RotationCalculator()
     {
-        Vector3 pos = transform.position;
-        pos.z = Vector3.Dot(Input.gyro.gravity*90, Vector3.left); //small sides -> bottom down and top up is + (this is the important one)
+        //pos = transform.rotation.eulerAngles;
+        pos.z = Vector3.Dot(Input.gyro.gravity * 90, Vector3.left); //small sides -> bottom down and top up is + (this is the important one)
         pos.y = Vector3.Dot(Input.gyro.gravity*90, Vector3.down); // long sides -> bottom left and top right is +
         pos.x = Vector3.Dot(Input.gyro.gravity*90, Vector3.back); // faces -> face down back up is +
 
@@ -156,6 +161,59 @@ public class MotionControl : MonoBehaviour {
             }
             strafeScale = 0;
     }
-    
+    public void go_Left(Game_Master universe)
+    {
+        if (universe == null)
+        {
+            universe = GetComponentInParent<Game_Master>();
+        }
+        universe.fUserOffsetx = universe.fUserOffsetx + 45 * strafeScale;
+        universe.fUserOffsetT = universe.fUserOffsetT + 45 * strafeScale;
+    }
 
+    public void go_Right(Game_Master universe)
+    {
+        if (universe == null)
+        {
+            universe = GetComponentInParent<Game_Master>();
+        }
+        universe.fUserOffsetx = universe.fUserOffsetx - 45 * strafeScale;
+        universe.fUserOffsetT = universe.fUserOffsetT - 45 * strafeScale;
+    }
+
+    public void left_button_down(MotionControl myself)
+    {
+        if (myself == null)
+        {
+            myself = GetComponent<MotionControl>();
+        }
+        myself.left_button_pressed = true;
+    }
+
+    public void left_button_up(MotionControl myself)
+    {
+        if (myself == null)
+        {
+            myself = GetComponent<MotionControl>();
+        }
+        myself.left_button_pressed = false;
+    }
+
+    public void right_button_down(MotionControl myself)
+    {
+        if (myself == null)
+        {
+            myself = GetComponent<MotionControl>();
+        }
+        myself.right_button_pressed = true;
+    }
+
+    public void right_button_up(MotionControl myself)
+    {
+        if (myself == null)
+        {
+            myself = GetComponent<MotionControl>();
+        }
+        myself.right_button_pressed = false;
+    }
 }

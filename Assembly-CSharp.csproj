@@ -57,6 +57,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Boss.cs" />
      <Compile Include="Assets\Scripts\ButtonTouch.cs" />
+     <Compile Include="Assets\Scripts\Debugging.cs" />
      <Compile Include="Assets\Scripts\EternalVariables.cs" />
      <Compile Include="Assets\Scripts\Falling.cs" />
      <Compile Include="Assets\Scripts\FollowPlayer.cs" />
@@ -70,6 +71,7 @@
      <Compile Include="Assets\Scripts\MotionControl.cs" />
      <Compile Include="Assets\Scripts\MuteSound.cs" />
      <Compile Include="Assets\Scripts\PauseMenu.cs" />
+     <Compile Include="Assets\Scripts\Pause_menu_buttons.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\Rotate.cs" />
      <Compile Include="Assets\Scripts\Score.cs" />

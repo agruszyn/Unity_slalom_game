@@ -40,6 +40,10 @@ public class SkyboxCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SkyCamera.transform.Rotate(SkyBoxRotation);
+        if (PlayerPrefs.GetInt("pause") == 0)
+        {
+            SkyCamera.transform.Rotate(SkyBoxRotation);
+        }
     }
+
 }

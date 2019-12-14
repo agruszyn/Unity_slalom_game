@@ -37,7 +37,7 @@ public class ButtonTouch : MonoBehaviour
             {
                 if ((Input.GetTouch(i).phase == TouchPhase.Ended))
                 {
-                    Debug.Log(i);
+                    //ebug.Log(i);
                     ped.position = Input.GetTouch(i).position;
                     gr.Raycast(ped, results);
                     for (int q = 0; q <= results.Count - 1; q++)

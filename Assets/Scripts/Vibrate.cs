@@ -22,8 +22,8 @@ public class Vibrate : MonoBehaviour {
         
         if (player.tag != "tumbling" && player.tag != "dead" && other.name != "PlayerCharacter")
         {
-            Debug.Log(other.name);
-            Debug.Log(player.tag);
+            //Debug.Log(other.name);
+            //Debug.Log(player.tag);
             Vibration.Vibrate(200);
         }
     }
