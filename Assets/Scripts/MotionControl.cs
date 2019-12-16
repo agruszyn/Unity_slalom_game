@@ -5,19 +5,30 @@ public class MotionControl : MonoBehaviour {
 
     // Use this for initialization
     public Vector3 orientation;
+    public float startingjetSpeed = -1.5f;
     public float jetSpeed;
     public float strafeScale;
     public float multiplierSpeed;
     public float strafeDebug;
     public Vector3 tumble;
+    public Vector3 starting_turn_speed = new Vector3(0, 0, 1);
+    public Vector3 turn_speed;
+    public Vector3 base_skybox_rotation = new Vector3(0.1f, 0.02f, 0.0f);
+    private Vector3 skybox_rotation = new Vector3(0.1f, 0.02f, 0.0f);
+    public int max_turn_angle = 45;
+    public float max_button_turn_angle = (45 / 5);
+    private bool test_no_gyro = false;
     //public Vector3 g = new Vector3(0, 0, 0);
 
     //private GameManager center;
     //private CardboardHead viewPort;
     private Game_Master world;
-    private TranslatePlayer speed;
+    private TranslateObstacles speed;
     private GameObject scoreboard;
+    private GameObject skybox;
+    private SkyboxCamera skybox_controller;
     private Score myScore;
+    private GameObject hazard_rotator;
     private float angularDirection;
     public bool bWait;
     private float fStartTime;
@@ -28,14 +39,20 @@ public class MotionControl : MonoBehaviour {
 
     void Start()
     {
+        startingjetSpeed = -1.5f;
+        jetSpeed = startingjetSpeed;
+        PlayerPrefs.SetFloat("jetSpeed", jetSpeed);
+        hazard_rotator = GameObject.Find("Rotate Obstacles");
         scoreboard = GameObject.Find("Score");
+        skybox = GameObject.Find("Skybox");
         myScore = scoreboard.GetComponent<Score>();
         vrMode = false; //PlayerPrefs.GetInt("VRmode") == 1;
         //viewPort = GetComponentInChildren<CardboardHead>();
         orientation.y = 0;
         world = GetComponentInParent<Game_Master>();
-        speed = GetComponentInParent<TranslatePlayer>();
-        strafeScale = 0.01f + speed.jetSpeed * 0.002f;
+        speed = hazard_rotator.GetComponent<TranslateObstacles>();
+        skybox_controller = skybox.GetComponent<SkyboxCamera>();
+        strafeScale = jetSpeed * 0.02f;
         Input.gyro.enabled = true;
     }
     //void Update()
@@ -47,7 +64,15 @@ public class MotionControl : MonoBehaviour {
     {
         if (PlayerPrefs.GetInt("pause") == 0)
         {
-
+            jetSpeed = myScore.multiplier * startingjetSpeed;
+            if (PlayerPrefs.GetFloat("jetSpeed") != jetSpeed)
+            {
+                strafeScale = jetSpeed * 0.02f;
+                turn_speed = starting_turn_speed * myScore.multiplier;
+                skybox_rotation.x = base_skybox_rotation.x * myScore.multiplier;
+                skybox_controller.SetSkyBoxRotation(skybox_rotation);
+                PlayerPrefs.SetFloat("jetSpeed", jetSpeed);
+            }
             if (this.tag != "tumbling" && this.tag != "dead")
             {
                 RotationCalculator();
@@ -56,22 +81,30 @@ public class MotionControl : MonoBehaviour {
             {
                 Tumble();
             }
-            transform.position = new Vector3(0, transform.position.y, transform.position.z);
-            world.fUserOffsetx = world.fUserOffsetx + angularDirection * strafeScale;
+            //transform.position = new Vector3(0, transform.position.y, transform.position.z);
+            //world.fUserOffsetx = world.fUserOffsetx + angularDirection * strafeScale;
+            //world.fUserOffsetT = world.fUserOffsetT + angularDirection * strafeScale; //gio
             if (Input.GetKey("right") || right_button_pressed)
             {
-                //world.fUserOffsetx = world.fUserOffsetx - 45 * strafeScale;
-                //world.fUserOffsetT = world.fUserOffsetT - 45 * strafeScale;
                 go_Right(world);
+                if (!SystemInfo.supportsGyroscope || test_no_gyro)
+                    { pos = Turn_camera_right(pos); }
             }
             else if (Input.GetKey("left") || left_button_pressed)
             {
-                //world.fUserOffsetx = world.fUserOffsetx + 45 * strafeScale;
-                //world.fUserOffsetT = world.fUserOffsetT + 45 * strafeScale;
-                go_Left(world);
-                // Debug.Log("LEFT!");
+                    go_Left(world);
+                if (!SystemInfo.supportsGyroscope || test_no_gyro)
+                    { pos = Turn_camera_left(pos); }
             }
-            world.fUserOffsetT = world.fUserOffsetT + angularDirection * strafeScale;
+            else if (SystemInfo.supportsGyroscope == false || test_no_gyro)
+            {
+                pos = Return_to_center(pos);
+            }
+            if (SystemInfo.supportsGyroscope == true && !(Input.GetKey("left") || left_button_pressed) && !(Input.GetKey("right") || right_button_pressed) && !test_no_gyro)
+            { 
+                world.fUserOffsetT = world.fUserOffsetT + angularDirection * strafeScale;
+                world.fUserOffsetx = world.fUserOffsetx + angularDirection * strafeScale; //gio
+            }
         }
     }
 
@@ -90,11 +123,14 @@ public class MotionControl : MonoBehaviour {
     public void RotationCalculator()
     {
         //pos = transform.rotation.eulerAngles;
-        pos.z = Vector3.Dot(Input.gyro.gravity * 90, Vector3.left); //small sides -> bottom down and top up is + (this is the important one)
-        pos.y = Vector3.Dot(Input.gyro.gravity*90, Vector3.down); // long sides -> bottom left and top right is +
-        pos.x = Vector3.Dot(Input.gyro.gravity*90, Vector3.back); // faces -> face down back up is +
+        if (SystemInfo.supportsGyroscope && !test_no_gyro)
+        {
+            pos.z = Vector3.Dot(Input.gyro.gravity * 90, Vector3.left); //small sides -> bottom down and top up is + (this is the important one)
+            pos.y = Vector3.Dot(Input.gyro.gravity * 90, Vector3.down); // long sides -> bottom left and top right is +
+            pos.x = Vector3.Dot(Input.gyro.gravity * 90, Vector3.back); // faces -> face down back up is +
+        }
 
-        if (pos.z <= 45 || pos.z >= 315)
+        if (pos.z <= max_turn_angle || pos.z >= 360 - max_turn_angle)
         {
             orientation.z = pos.z;
         }
@@ -122,17 +158,17 @@ public class MotionControl : MonoBehaviour {
         }
 
 
-        if (orientation.z <= 45 || orientation.z >= 315)
+        if (orientation.z <= max_turn_angle || orientation.z >= 360- max_turn_angle)
         {
             transform.eulerAngles = orientation;
         }
-        else if (transform.eulerAngles.z <= 180 && orientation.z >= 45)
+        else if (transform.eulerAngles.z <= 180 && orientation.z >= max_turn_angle)
         {
-            transform.eulerAngles = new Vector3(orientation.x, 0, 45);
+            transform.eulerAngles = new Vector3(orientation.x, 0, max_turn_angle);
         }
-        else if (transform.eulerAngles.z >= 180 && orientation.z <= 315)
+        else if (transform.eulerAngles.z >= 180 && orientation.z <= 360 - max_turn_angle)
         {
-            transform.eulerAngles = new Vector3(orientation.x, 0, 315);
+            transform.eulerAngles = new Vector3(orientation.x, 0, 360 - max_turn_angle);
         }
 
         if (orientation.z >= 180)
@@ -167,8 +203,9 @@ public class MotionControl : MonoBehaviour {
         {
             universe = GetComponentInParent<Game_Master>();
         }
-        universe.fUserOffsetx = universe.fUserOffsetx + 45 * strafeScale;
-        universe.fUserOffsetT = universe.fUserOffsetT + 45 * strafeScale;
+        Debug.Log("going left here");
+        universe.fUserOffsetx = universe.fUserOffsetx - (max_turn_angle / max_button_turn_angle) * strafeScale * orientation.z;
+        universe.fUserOffsetT = universe.fUserOffsetT - (max_turn_angle / max_button_turn_angle) * strafeScale * orientation.z;
     }
 
     public void go_Right(Game_Master universe)
@@ -177,8 +214,8 @@ public class MotionControl : MonoBehaviour {
         {
             universe = GetComponentInParent<Game_Master>();
         }
-        universe.fUserOffsetx = universe.fUserOffsetx - 45 * strafeScale;
-        universe.fUserOffsetT = universe.fUserOffsetT - 45 * strafeScale;
+        universe.fUserOffsetx = universe.fUserOffsetx - (max_turn_angle / max_button_turn_angle) * strafeScale * orientation.z;
+        universe.fUserOffsetT = universe.fUserOffsetT - (max_turn_angle / max_button_turn_angle) * strafeScale * orientation.z;
     }
 
     public void left_button_down(MotionControl myself)
@@ -215,5 +252,36 @@ public class MotionControl : MonoBehaviour {
             myself = GetComponent<MotionControl>();
         }
         myself.right_button_pressed = false;
+    }
+
+    public Vector3 Turn_camera_left(Vector3 current_rotation)
+    {
+        if (current_rotation.z < max_turn_angle)
+        {
+            current_rotation += (turn_speed);
+        }
+        return current_rotation;
+    }
+    public Vector3 Turn_camera_right(Vector3 current_rotation)
+    {
+        if (current_rotation.z > -max_turn_angle)
+        {
+            current_rotation -= (turn_speed);
+        }
+        return current_rotation;
+    }
+    public Vector3 Return_to_center(Vector3 current_rotation)
+    {
+        if (Mathf.Abs(current_rotation.z) < turn_speed.z)
+        { return new Vector3(0, 0, 0); }
+        if (current_rotation.z > 0)
+        {
+            current_rotation -= (turn_speed);
+        }
+        else if (current_rotation.z < 0)
+        {
+            current_rotation += (turn_speed);
+        }
+        return current_rotation;
     }
 }

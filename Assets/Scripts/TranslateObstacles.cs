@@ -9,6 +9,7 @@ public class TranslateObstacles : MonoBehaviour
     public float jetSpeed;
     public float strafeScale;
     public float multiplierSpeed;
+    Vector3 pos;
 
     //private CardboardHead viewPort;
     private float retainSpeed;
@@ -16,7 +17,7 @@ public class TranslateObstacles : MonoBehaviour
 
     void Start()
     {
-        jetSpeed = -1.5f;
+        jetSpeed = PlayerPrefs.GetFloat("jetSpeed");
         //viewPort = GetComponentInChildren<CardboardHead>();
         orientation.y = 0;
     }
@@ -26,13 +27,13 @@ public class TranslateObstacles : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("pause") == 0)
         {
+            jetSpeed = PlayerPrefs.GetFloat("jetSpeed");
             transform.Rotate(Vector3.right, Time.deltaTime * jetSpeed, Space.World);
         }
     }
 
     public void RotationCalculator()
     {
-    Vector3 pos = transform.position;
     pos.z = Vector3.Dot(Input.gyro.gravity*90, Vector3.left); //small sides -> bottom down and top up is + (this is the important one)
     pos.y = Vector3.Dot(Input.gyro.gravity*90, Vector3.down); // long sides -> bottom left and top right is +
     pos.x = Vector3.Dot(Input.gyro.gravity*90, Vector3.back); // faces -> face down back up is +

@@ -11,6 +11,7 @@ public class Score : MonoBehaviour
     private int framerate = 0;
     public int level = 0;
     public int total_level = 0;
+    public float multiplier = 1.0f;
     // Use this for initialization
     void Start()
     {
@@ -61,6 +62,7 @@ public class Score : MonoBehaviour
             total_level++;
             if (level > 3)
             {
+                multiplier += 0.2f;
                 level = 0;
             }
 

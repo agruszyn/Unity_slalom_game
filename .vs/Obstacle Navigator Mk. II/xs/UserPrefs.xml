@@ -1,11 +1,16 @@
 ﻿<Properties StartupConfiguration="{3D8E05FC-9F25-1FEE-D2CA-E65B0CD00DD7}|Unit Tests">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Debug.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MotionControl.cs">
     <Files>
-      <File FileName="Assets/Scripts/PlayerMovement.cs" Line="15" Column="36" />
-      <File FileName="Assets/Scripts/MotionControl.cs" Line="170" Column="74" />
-      <File FileName="Assets/Scripts/Score.cs" Line="50" Column="22" />
-      <File FileName="Assets/Scripts/Debug.cs" Line="20" Column="9" />
-      <File FileName="Assets/Scripts/SkyboxCamera.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Hazards.cs" Line="92" Column="32" />
+      <File FileName="Assets/Scripts/fade.cs" Line="29" Column="6" />
+      <File FileName="Assets/Scripts/MuteSound.cs" Line="52" Column="33" />
+      <File FileName="Assets/Scripts/TranslateObstacles.cs" Line="30" Column="55" />
+      <File FileName="Assets/Scripts/Score.cs" Line="1" Column="14" />
+      <File FileName="Assets/Scripts/MotionControl.cs" Line="270" Column="10" />
+      <File FileName="Assets/Scripts/SelfDestruct.cs" Line="27" Column="1" />
+      <File FileName="Assets/Scripts/TranslatePlayer.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/terrainGenerator.cs" Line="77" Column="5" />
+      <File FileName="Assets/Scripts/SkyboxCamera.cs" Line="24" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,21 +19,7 @@
             <Node name="Assembly-CSharp" expanded="True">
               <Node name="Assets" expanded="True">
                 <Node name="Scripts" expanded="True">
-                  <Node name="Debug.cs" selected="True" />
-                </Node>
-              </Node>
-            </Node>
-            <Node name="Assembly-CSharp-firstpass" expanded="True">
-              <Node name="Assets" expanded="True">
-                <Node name="Standard Assets" expanded="True">
-                  <Node name="CrossPlatformInput" expanded="True">
-                    <Node name="Scripts" expanded="True" />
-                  </Node>
-                  <Node name="Effects" expanded="True">
-                    <Node name="ImageEffects" expanded="True">
-                      <Node name="Scripts" expanded="True" />
-                    </Node>
-                  </Node>
+                  <Node name="MotionControl.cs" selected="True" />
                 </Node>
               </Node>
             </Node>

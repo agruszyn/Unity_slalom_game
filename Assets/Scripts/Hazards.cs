@@ -5,9 +5,9 @@ using System.Collections.Generic;
 public class Hazards : MonoBehaviour {
 
     private string seed;
-    public int randomFillPercent = 4;
-    public int percentLayerTwo = 25;
-    public int percentLayerThree = 25;
+    public int randomFillPercent = 25;
+    public int percentLayerTwo = 4;
+    public int percentLayerThree = 4;
     public Quaternion qHazardRotation;
     Vector3 vStartHazards;
     public float xLocalh;
@@ -36,6 +36,10 @@ public class Hazards : MonoBehaviour {
     float sign = 0.00f;
     float startpos = 0.0f;
     bool firstcycle = false;
+    int starting_box_count = 100;//349
+    public int randomFillPercen_spitting = 5;
+    public int percentLayerTwo_spitting = 5;
+    public int percentLayerThree_spitting = 5;
 
     const float tileWidth = 20.944f;
     const float tileLength = 41.88714f;
@@ -46,12 +50,16 @@ public class Hazards : MonoBehaviour {
     private GameObject[] openHazards;
     private GameObject[] buffer;
     private GameObject[] enemies;
-    public int MyEnemies;
+    public int total_enabled_boxes;
+    int hazard_enable_distance_to_player = 60;
+    int left_border = 20;
+    int right_border = 80;
 
-    public int countHazards;
+    public int total_disabled_boxes;
     public int newRow;
     public int instance = 0;
     private GameObject box;
+    private GameObject box_marked_for_deletion;
     private float offset = 0;
     public int hazardlevel;
     public float change;
@@ -83,62 +91,88 @@ public class Hazards : MonoBehaviour {
         hazardSectionOne = new int[101, 71];
         hazardSectionTwo = new int[101, 71];
 
-        bottomY = GetOrientedy((float)(69), 1);
-        bottomZ = GetOrientedz((float)(69), 1);
-        middleY = GetOrientedy((float)(69), 2);
-        middleZ = GetOrientedz((float)(69), 2);
-        topY = GetOrientedy((float)(69), 3);
-        topZ = GetOrientedz((float)(69), 3);
+        bottomY = GetOrientedy((float)(hazard_enable_distance_to_player), 1);
+        bottomZ = GetOrientedz((float)(hazard_enable_distance_to_player), 1);
+        middleY = GetOrientedy((float)(hazard_enable_distance_to_player), 2);
+        middleZ = GetOrientedz((float)(hazard_enable_distance_to_player), 2);
+        topY = GetOrientedy((float)(hazard_enable_distance_to_player), 3);
+        topZ = GetOrientedz((float)(hazard_enable_distance_to_player), 3);
         initializeHazard();
-        qHazardRotation.eulerAngles = new Vector3((int)(69 * cubedegree), 0, 0);
+        qHazardRotation.eulerAngles = new Vector3((int)(hazard_enable_distance_to_player * cubedegree), 0, 0);
         change = mahRotation.transform.rotation.eulerAngles.x;
         MapHazard();
     }
-	
-	// Update is called once per frame
-	void FixedUpdate ()
+    
+    // Update is called once per frame
+    void FixedUpdate ()
     {
-        transform.position = new Vector3(manager.fUserOffsetT, 0, 0);
-	}
+        if (PlayerPrefs.GetInt("pause") == 0)
+        {
+            transform.position = new Vector3(manager.fUserOffsetT, 0, 0);
+        }
+    }
 
     void Update()
     {
-        enemies = GameObject.FindGameObjectsWithTag("enabled");
-        MyEnemies = enemies.Length;
-
-        //change = mahRotation.transform.rotation.x;
-        if (cycle >= 70 && iteration == 0)
+        if (PlayerPrefs.GetInt("pause") == 0)
         {
-            MapHazard();
-            cycle = 0;
-        }
-        hazardlevel = level.level;
-        if (head.starthover != true)
-            {
-            // RecycleHazard();
-            //ReplaceHazard();
-            if (hazardlevel < 1 )
-            { PatternHazard(); }
-            if (hazardlevel == 1 || hazardlevel == 2)
-            { MakePath(); }
-            }
-        else if (head.starthover == true)
-            {
-            firstcycle = false;
-            go = false;
-            funnelsize = 40;
-            slope = 0.0f;
-            target = 0.0f;
-            location = 0.0f;
-            acceleration = 0.0f;
-            distance = 0;
-            targetdistance = 0;
-            sign = 0.00f;
-            startpos = 0.0f;
-            firstcycle = false;
+            enemies = GameObject.FindGameObjectsWithTag("enabled");
+            total_enabled_boxes = enemies.Length;
 
-            SpitHazards(); 
+
+            //change = mahRotation.transform.rotation.x;
+            if (cycle >= 70 && iteration == 0)
+            {
+                MapHazard();
+                cycle = 0;
             }
+            hazardlevel = level.level;
+                if (head.starthover != true)
+                {
+                    // RecycleHazard();
+                    //ReplaceHazard();
+                    if (hazardlevel < 1)
+                    { PatternHazard(); }
+                    if (hazardlevel == 1 || hazardlevel == 2)
+                    { MakePath(); }
+                }
+                else if (head.starthover == true)
+                {
+                    firstcycle = false;
+                    go = false;
+                    funnelsize = 40;
+                    slope = 0.0f;
+                    target = 0.0f;
+                    location = 0.0f;
+                    acceleration = 0.0f;
+                    distance = 0;
+                    targetdistance = 0;
+                    sign = 0.00f;
+                    startpos = 0.0f;
+                    firstcycle = false;
+
+                    SpitHazards();
+                }
+            if (total_disabled_boxes >= 100)
+            {
+                openHazards = GameObject.FindGameObjectsWithTag("disabled");
+                for (int count = 0; count <= 50; count++)
+                {
+                    //box_marked_for_deletion = GameObject.FindGameObjectWithTag("disabled");
+
+                    //Debug.Log("destroying box" + box_marked_for_deletion);
+                    Destroy(openHazards[count]);
+                }
+            }
+            if (total_disabled_boxes <= 10)
+            {
+                for (int a = 0; a < starting_box_count; a++)
+                {
+                    var cuboid = Instantiate(hazard, new Vector3(0, 0, -10), qHazardRotation) as GameObject;
+                    cuboid.transform.parent = gameObject.transform;
+                }
+            }
+        }
     }
 
 
@@ -178,16 +212,18 @@ public class Hazards : MonoBehaviour {
 
     public void initializeHazard()
     {
-        for (int a = 0; a < 349; a++)
+        for (int a = 0; a < starting_box_count; a++)
         {
             var cuboid = Instantiate(hazard, new Vector3(0, 0, -10), qHazardRotation) as GameObject;
             cuboid.transform.parent = gameObject.transform;
         }
         seed = Time.time.ToString();
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
-        for (int x = 0; x <= 100; x++)
+        //Z is distance to player
+        //X is left to right distance
+        for (int x = left_border; x <= right_border; x++)
         {
-            for (int z = 30; z <= 100; z++)
+            for (int z = 30; z <= hazard_enable_distance_to_player; z++)
             {
                 if (pseudoRandom.Next(0, 100) < randomFillPercent)
                 {
@@ -201,7 +237,7 @@ public class Hazards : MonoBehaviour {
                     zLocalh = GetOrientedz((float)(z), 1);
                     vStartHazards = new Vector3(xLocalh, yLocalh, zLocalh);
                     var cuboid = Instantiate(hazard, vStartHazards, qHazardRotation) as GameObject;
-                    cuboid.transform.parent = gameObject.transform;
+                   cuboid.transform.parent = gameObject.transform;
 
                     if (pseudoRandom.Next(0, 100) < percentLayerTwo)
                     {
@@ -291,93 +327,93 @@ public class Hazards : MonoBehaviour {
     //    }       
     //  }
 
-    public void ReplaceHazard()
-    {
-        //find blocks that have been removed from play
-        openHazards = GameObject.FindGameObjectsWithTag("disabled");
-        countHazards = openHazards.Length;
+    //public void ReplaceHazard()
+    //{
+    //    //find blocks that have been removed from play
+    //    openHazards = GameObject.FindGameObjectsWithTag("disabled");
+    //    total_disabled_boxes = openHazards.Length;
 
-        //if there is enough available then recycle the box's back in
-        if (countHazards > 30)
-        {
-            //randomize location of blocks
-            seed = Time.time.ToString();
-            System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+    //    //if there is enough available then recycle the box's back in
+    //    if (total_disabled_boxes > 30)
+    //    {
+    //        //randomize location of blocks
+    //        seed = Time.time.ToString();
+    //        System.Random pseudoRandom = new System.Random(seed.GetHashCode());
 
-            //change the center of randomization based on player position on X-axis
-           // offset = -Mathf.Round(manager.fUserOffsetT);
-            for (int x = 0; x <= 100; x++)
-            {
-                if (pseudoRandom.Next(0, 100) < randomFillPercent)
-                {
+    //        //change the center of randomization based on player position on X-axis
+    //       // offset = -Mathf.Round(manager.fUserOffsetT);
+    //        for (int x = 0; x <= 100; x++)
+    //        {
+    //            if (pseudoRandom.Next(0, 100) < randomFillPercent)
+    //            {
 
-                    //Find the hazard locations in the world - layer 1
-                    xLocalh = ((x * 5) - 250 + offset);
-                    vStartHazards = new Vector3(xLocalh, bottomY, bottomZ);
-                    box = GameObject.FindGameObjectWithTag("disabled");
-                    box.transform.SetParent(world.transform);
-                    box.transform.localPosition = vStartHazards;
-                    box.transform.localRotation = qHazardRotation;
-                    box.transform.SetParent(rotator.transform);
-                    box.tag = "enabled";
+    //                //Find the hazard locations in the world - layer 1
+    //                xLocalh = ((x * 5) - 250 + offset);
+    //                vStartHazards = new Vector3(xLocalh, bottomY, bottomZ);
+    //                box = GameObject.FindGameObjectWithTag("disabled");
+    //                box.transform.SetParent(world.transform);
+    //                box.transform.localPosition = vStartHazards;
+    //                box.transform.localRotation = qHazardRotation;
+    //                box.transform.SetParent(rotator.transform);
+    //                box.tag = "enabled";
 
-                    //layer 2
-                    if (pseudoRandom.Next(0, 100) < percentLayerTwo)
-                    {
-                        xLocalh = ((x * 5) - 250 + offset);
-                        vStartHazards = new Vector3(xLocalh, middleY, middleZ);
-                        box = GameObject.FindGameObjectWithTag("disabled");
-                        box.transform.SetParent(world.transform);
-                        box.transform.localPosition = vStartHazards;
-                        box.transform.localRotation = qHazardRotation;
-                        box.transform.SetParent(rotator.transform);
-                        box.tag = "enabled";
+    //                //layer 2
+    //                if (pseudoRandom.Next(0, 100) < percentLayerTwo)
+    //                {
+    //                    xLocalh = ((x * 5) - 250 + offset);
+    //                    vStartHazards = new Vector3(xLocalh, middleY, middleZ);
+    //                    box = GameObject.FindGameObjectWithTag("disabled");
+    //                    box.transform.SetParent(world.transform);
+    //                    box.transform.localPosition = vStartHazards;
+    //                    box.transform.localRotation = qHazardRotation;
+    //                    box.transform.SetParent(rotator.transform);
+    //                    box.tag = "enabled";
 
-                        //layer 3
-                        if (pseudoRandom.Next(0, 100) < percentLayerThree)
-                        {
-                            xLocalh = ((x * 5) - 250 + offset);
-                            vStartHazards = new Vector3(xLocalh, topY, topZ);
-                            box = GameObject.FindGameObjectWithTag("disabled");
-                            box.transform.SetParent(world.transform);
-                            box.transform.localPosition = vStartHazards;
-                            box.transform.localRotation = qHazardRotation;
-                            box.transform.SetParent(rotator.transform);
-                            box.tag = "enabled";
-                        }
+    //                    //layer 3
+    //                    if (pseudoRandom.Next(0, 100) < percentLayerThree)
+    //                    {
+    //                        xLocalh = ((x * 5) - 250 + offset);
+    //                        vStartHazards = new Vector3(xLocalh, topY, topZ);
+    //                        box = GameObject.FindGameObjectWithTag("disabled");
+    //                        box.transform.SetParent(world.transform);
+    //                        box.transform.localPosition = vStartHazards;
+    //                        box.transform.localRotation = qHazardRotation;
+    //                        box.transform.SetParent(rotator.transform);
+    //                        box.tag = "enabled";
+    //                    }
 
-                    }
-                }
-            }
-        }
-    }
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 
     public void MapHazard()
     {
-        //randomize location of blocks
+        //fill in array randomly. This array is used to instantiate and move boxes.
         seed = Time.time.ToString();
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
 
         for (int y = 0; y <= 70; y++)
         { 
-        for (int x = 0; x <= 100; x++)
-        {
-            if (pseudoRandom.Next(0, 100) < randomFillPercent)
+        for (int x = left_border; x <= right_border; x++)
             {
-                hazardSectionOne[x, y] = 1;
-                //layer 2
-                if (pseudoRandom.Next(0, 100) < percentLayerTwo)
+                if (pseudoRandom.Next(0, 100) < randomFillPercent)
                 {
-                    hazardSectionOne[x, y] = 2;
-                    //layer 3
-                    if (pseudoRandom.Next(0, 100) < percentLayerThree)
+                    hazardSectionOne[x, y] = 1;
+                    //layer 2
+                    if (pseudoRandom.Next(0, 100) < percentLayerTwo)
                     {
-                        hazardSectionOne[x, y] = 3;
+                        hazardSectionOne[x, y] = 2;
+                        //layer 3
+                        if (pseudoRandom.Next(0, 100) < percentLayerThree)
+                        {
+                            hazardSectionOne[x, y] = 3;
+                        }
                     }
                 }
+                else { hazardSectionOne[x, y] = 0; }
             }
-            else { hazardSectionOne[x, y] = 0; }
-        }
     }
     }
 
@@ -456,21 +492,36 @@ public class Hazards : MonoBehaviour {
 
         //find blocks that have been removed from play
         openHazards = GameObject.FindGameObjectsWithTag("disabled");
-        countHazards = openHazards.Length;
-        if (countHazards > 350)
-        { go = true; }
+        total_disabled_boxes = openHazards.Length;
+        //if (total_disabled_boxes >= 30)
+        //{
+        //    //for (int count = 0; count <= 10; count++)
+        //    //{
+        //        box_marked_for_deletion = GameObject.FindGameObjectWithTag("disabled");
+        //        Debug.Log("destroying box" + box_marked_for_deletion);
+        //        Destroy(box_marked_for_deletion);
+        //    //}
+        //}
+        //if (total_disabled_boxes <= 10)
+        //{
+        //    //for (int a = 0; a < starting_box_count; a++)
+        //    //{
+        //        var cuboid = Instantiate(hazard, new Vector3(0, 0, -10), qHazardRotation) as GameObject;
+        //        cuboid.transform.parent = gameObject.transform;
+        //    //}
+        //}
+        go = true;
         //Debug.Log(mahRotation.transform.rotation.eulerAngles.x);
         //if there is enough available then recycle the box's back in
         if (go == true && Mathf.Abs(mahRotation.transform.rotation.eulerAngles.x - change) >= 0.2)
         {
             change = mahRotation.transform.rotation.eulerAngles.x;
             //Debug.Log(iteration);
-            for (int x = 0; x <= 100; x++)
+            for (int x = left_border; x <= right_border; x++)
             {
-                
+
                 if (hazardSectionOne[x,iteration] >= 1)
                 {
-                    //Debug.Log("I'm trying here!");
                     //Find the hazard locations in the world - layer 1
                     xLocalh = ((x * 5) - 250 + offset);
                     vStartHazards = new Vector3(xLocalh, bottomY, bottomZ);
@@ -543,13 +594,27 @@ public class Hazards : MonoBehaviour {
     {
         int size = 2;
         openHazards = GameObject.FindGameObjectsWithTag("disabled");
-        countHazards = openHazards.Length;
+        //if (total_disabled_boxes >= 30)
+        //{
+        //    for (int count = 0; count <= 10; count++)
+        //    {
+        //        box_marked_for_deletion = GameObject.FindGameObjectWithTag("disabled");
+        //        Debug.Log("destroying box" + box_marked_for_deletion);
+        //        Destroy(box_marked_for_deletion);
+        //    }
+        //}
+        //if (total_disabled_boxes <= 10)
+        //{
+        //    for (int a = 0; a < starting_box_count; a++)
+        //    {
+        //        var cuboid = Instantiate(hazard, new Vector3(0, 0, -10), qHazardRotation) as GameObject;
+        //        cuboid.transform.parent = gameObject.transform;
+        //    }
+        //}
+        total_disabled_boxes = openHazards.Length;
         if (firstcycle == false)
         { startpos = -transform.position.x; }
 
-        if (countHazards > 350)
-        { go = true;
-        }
 
         if (go == true && Mathf.Abs(mahRotation.transform.rotation.eulerAngles.x - change) >= 0.2)
         {
@@ -609,11 +674,26 @@ public class Hazards : MonoBehaviour {
 
     public void SpitHazards()
     {
-        randomFillPercent = 5;
-        percentLayerTwo = 25;
-        percentLayerThree = 25;
+
         openHazards = GameObject.FindGameObjectsWithTag("disabled");
-        countHazards = openHazards.Length;
+        total_disabled_boxes = openHazards.Length;
+        //if (total_disabled_boxes >= 30)
+        //{
+        //    for (int count = 0; count <= 10; count++)
+        //    {
+        //        box_marked_for_deletion = GameObject.FindGameObjectWithTag("disabled");
+        //        Debug.Log("destroying box" + box_marked_for_deletion);
+        //        Destroy(box_marked_for_deletion);
+        //    }
+        //}
+        //if (total_disabled_boxes <= 10)
+        //{
+        //    for (int a = 0; a < starting_box_count; a++)
+        //    {
+        //        var cuboid = Instantiate(hazard, new Vector3(0, 0, -10), qHazardRotation) as GameObject;
+        //        cuboid.transform.parent = gameObject.transform;
+        //    }
+        //}
         if (Mathf.Abs(mahRotation.transform.rotation.eulerAngles.x - change) >= 0.2)
         {
             //Debug.Log("spitting");
@@ -621,9 +701,9 @@ public class Hazards : MonoBehaviour {
             seed = Time.time.ToString();
             System.Random pseudoRandom = new System.Random(seed.GetHashCode());
             //offset = -Mathf.Round(manager.fUserOffsetT);
-            for (int x = 0; x <= 100; x++)
+            for (int x = left_border; x <= right_border; x++)
             {
-                if (pseudoRandom.Next(0, 100) < randomFillPercent)
+                if (pseudoRandom.Next(0, 100) < randomFillPercen_spitting)
                 {
                     //Find the hazard locations in the world
                     xLocalh = ((x * 5) - 250 + offset);
@@ -639,7 +719,7 @@ public class Hazards : MonoBehaviour {
                     oFall.SendMessage("MoveTo", transform.InverseTransformPoint(vStartHazards));
                     box.tag = "enabled";
 
-                        if (pseudoRandom.Next(0, 100) < percentLayerTwo)
+                        if (pseudoRandom.Next(0, 100) < percentLayerTwo_spitting)
                         {
                             xLocalh = ((x * 5) - 250 + offset);
                             vStartHazards = new Vector3(xLocalh, middleY, middleZ);
@@ -653,7 +733,7 @@ public class Hazards : MonoBehaviour {
                             oFall.SendMessage("MoveTo", transform.InverseTransformPoint(vStartHazards));
                             box.tag = "enabled";
 
-                            if (pseudoRandom.Next(0, 100) < percentLayerThree)
+                            if (pseudoRandom.Next(0, 100) < percentLayerThree_spitting)
                             {
                                 xLocalh = ((x * 5) - 250 + offset);
                                 vStartHazards = new Vector3(xLocalh, topY, topZ);

@@ -14,6 +14,7 @@ public class SkyboxCamera : MonoBehaviour
     // the additional rotation to add to the skybox
     // can be set during game play or in the inspector
     public Vector3 SkyBoxRotation;
+    private Vector3 total_skybox_rotation = new Vector3(0,0,0);
 
     // Use this for initialization
     void Start()
@@ -42,8 +43,10 @@ public class SkyboxCamera : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("pause") == 0)
         {
-            SkyCamera.transform.Rotate(SkyBoxRotation);
+            total_skybox_rotation += SkyBoxRotation;
+            transform.eulerAngles = total_skybox_rotation + MainCamera.transform.rotation.eulerAngles;
         }
+
     }
 
 }

@@ -52,7 +52,7 @@ public class MuteSound : MonoBehaviour
         sound.mute = (PlayerPrefs.GetInt("enable_sound") == 0);
 
         //Change icon
-        if (PlayerPrefs.GetInt("mute") == 1)
+        if (PlayerPrefs.GetInt("enable_sound") == 1)
         { icon.overrideSprite = off; }
         else { icon.overrideSprite = null; }
     }
