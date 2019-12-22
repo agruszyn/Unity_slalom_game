@@ -1140,7 +1140,7 @@ ScriptsOnlyBuild:
     className: AudioTrack
   - hash:
       serializedVersion: 2
-      Hash: fac0251c190b87c00968eb79a81f3107
+      Hash: 3c87ef31c02dcf5aa7725b04625452bb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Score
@@ -1374,7 +1374,7 @@ ScriptsOnlyBuild:
     className: terrainGenerator
   - hash:
       serializedVersion: 2
-      Hash: 3a8f7f54e4146c51d602eee9fd246aef
+      Hash: 373195d6fe08fe536c98233a832f27f7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MotionControl
@@ -1438,4 +1438,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/jet plane.unity
   - Assets/Scenes/Scoreboard.unity
   playerPath: /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle
-    Navigator Mk. II/demo_15DEC2019_2000.apk
+    Navigator Mk. II/demo_22DEC2019_V2.apk

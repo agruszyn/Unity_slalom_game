@@ -12,6 +12,7 @@ public class Score : MonoBehaviour
     public int level = 0;
     public int total_level = 0;
     public float multiplier = 1.0f;
+    private int level_Length = 250;
     // Use this for initialization
     void Start()
     {
@@ -34,7 +35,7 @@ public class Score : MonoBehaviour
             if (gameOn == true)
             {
                 score = score + 1;
-                completion = score - (total_level * 150);
+                completion = score - (total_level * level_Length);
             }
 
             CalculateLevel();
@@ -56,7 +57,7 @@ public class Score : MonoBehaviour
 
     void CalculateLevel()
     {
-        if (completion > 150)
+        if (completion > level_Length)
         {
             level++;
             total_level++;
