@@ -37,6 +37,15 @@ public class EternalVariables : MonoBehaviour {
         DontDestroyOnLoad(transform.gameObject);
         lastScene = SceneManager.GetActiveScene().buildIndex;
         PlayerPrefs.SetInt("VRmode", 0);
+        if (!PlayerPrefs.HasKey("UseGyro"))
+        {
+            if (SystemInfo.supportsGyroscope == true)
+            {
+                PlayerPrefs.SetInt("UseGyro", 1);
+            }
+            else { PlayerPrefs.SetInt("UseGyro", 0); }
+        }
+
     }
 
 

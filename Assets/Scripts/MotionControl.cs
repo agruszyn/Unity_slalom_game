@@ -39,18 +39,10 @@ public class MotionControl : MonoBehaviour {
 
     void Start()
     {
-        if (!PlayerPrefs.HasKey("UseGyro"))
-        {
-            if (SystemInfo.supportsGyroscope == true)
-            {
-                PlayerPrefs.SetInt("UseGyro", 1);
-            }
-            else { PlayerPrefs.SetInt("UseGyro", 0); }
-        }
-
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         //no_Gyro = (PlayerPrefs.GetInt("UseGyro") == 0);
         max_button_turn_angle = (max_turn_angle / 5);
-        no_Gyro = false;
+        no_Gyro = PlayerPrefs.GetInt("UseGyro") == 0;
         startingjetSpeed = -1.5f;
         jetSpeed = startingjetSpeed;
         PlayerPrefs.SetFloat("jetSpeed", jetSpeed);
@@ -85,7 +77,7 @@ public class MotionControl : MonoBehaviour {
                 skybox_controller.SetSkyBoxRotation(skybox_rotation);
                 PlayerPrefs.SetFloat("jetSpeed", jetSpeed);
             }
-            if (this.tag != "tumbling" && this.tag != "dead" && !no_Gyro)
+            if (this.tag != "tumbling" && this.tag != "dead")
             {
                 RotationCalculator();
             }
@@ -106,7 +98,7 @@ public class MotionControl : MonoBehaviour {
             {
                     go_Left(world);
                 if (no_Gyro)
-                    { pos = Turn_camera_left(pos); }
+                    { pos = Turn_camera_left(pos);}
             }
             else if (no_Gyro)
             {
@@ -275,7 +267,7 @@ public class MotionControl : MonoBehaviour {
 
     public Vector3 Turn_camera_left(Vector3 current_rotation)
     {
-        if (current_rotation.z < max_turn_angle)
+        if (current_rotation.z < max_button_turn_angle)
         {
             current_rotation += (turn_speed);
         }
@@ -283,7 +275,7 @@ public class MotionControl : MonoBehaviour {
     }
     public Vector3 Turn_camera_right(Vector3 current_rotation)
     {
-        if (current_rotation.z > -max_turn_angle)
+        if (current_rotation.z > -max_button_turn_angle)
         {
             current_rotation -= (turn_speed);
         }

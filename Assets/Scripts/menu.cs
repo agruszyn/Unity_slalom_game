@@ -38,6 +38,10 @@ public class menu : MonoBehaviour {
         {
             SceneManager.LoadScene("Scoreboard");
         }
+        if (scene == 3)
+        {
+            SceneManager.LoadScene("Settings");
+        }
 
     }
 

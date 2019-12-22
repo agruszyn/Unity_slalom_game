@@ -83,6 +83,7 @@
      <Compile Include="Assets\Scripts\TranslatePlayer.cs" />
      <Compile Include="Assets\Scripts\TranslatePlayer_menu.cs" />
      <Compile Include="Assets\Scripts\Vibrate.cs" />
+     <Compile Include="Assets\Scripts\Volume.cs" />
      <Compile Include="Assets\Scripts\bounce.cs" />
      <Compile Include="Assets\Scripts\buttonLogic.cs" />
      <Compile Include="Assets\Scripts\canvas.cs" />
@@ -95,6 +96,7 @@
      <Compile Include="Assets\Scripts\recycle.cs" />
      <Compile Include="Assets\Scripts\terrainGenerator.cs" />
      <Compile Include="Assets\Scripts\terrainGenerator_menu.cs" />
+     <Compile Include="Assets\Scripts\toggleGyro.cs" />
      <Compile Include="Assets\VibrationPlugin\Sources\Vibration.cs" />
      <Compile Include="Assets\VibrationPlugin\Sources\VibrationActivity.cs" />
      <None Include="Assets\Materials\ToonBasicOutline.shader" />

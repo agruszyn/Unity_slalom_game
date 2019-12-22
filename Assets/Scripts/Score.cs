@@ -12,7 +12,7 @@ public class Score : MonoBehaviour
     public int level = 0;
     public int total_level = 0;
     public float multiplier = 1.0f;
-    private int level_Length = 250;
+    private int level_Length = 300;
     // Use this for initialization
     void Start()
     {

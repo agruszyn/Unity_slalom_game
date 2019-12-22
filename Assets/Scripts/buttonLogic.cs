@@ -62,6 +62,10 @@ public class buttonLogic : MonoBehaviour {
             {
                 myMenu.SetScene(0);
             }
+            else if (gameObject.name == "Settings")
+            {
+                myMenu.SetScene(3);
+            }
 
             myText.fontSize = 20;
             fStartTime = 0;
@@ -91,6 +95,10 @@ public class buttonLogic : MonoBehaviour {
         else if (gameObject.name == "Main Menu")
         {
             myMenu.SetScene(0);
+        }
+        else if (gameObject.name == "Settings")
+        {
+            myMenu.SetScene(3);
         }
     }
 

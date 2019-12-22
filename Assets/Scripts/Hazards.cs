@@ -72,11 +72,14 @@ public class Hazards : MonoBehaviour {
     private float topY;
     private float topZ;
     float funnelsize = 40;
+    public System.Random pseudoRandom;
+
 
     // Use this for initialization
     void Start ()
     {
-        
+        seed = System.DateTime.Now.ToString();
+        pseudoRandom = new System.Random(seed.GetHashCode());
         newRow = 101;
         rotator = GameObject.Find("Hazrd Generator");
         mahRotation = GameObject.Find("Rotate Obstacles");
@@ -217,8 +220,9 @@ public class Hazards : MonoBehaviour {
             var cuboid = Instantiate(hazard, new Vector3(0, 0, -10), qHazardRotation) as GameObject;
             cuboid.transform.parent = gameObject.transform;
         }
-        seed = Time.time.ToString();
-        System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+        //seed = Time.time.ToString();
+        //seed = System.DateTime.Now.ToString();
+        //System.Random pseudoRandom = new System.Random(seed.GetHashCode());
         //Z is distance to player
         //X is left to right distance
         for (int x = left_border; x <= right_border; x++)
@@ -391,8 +395,8 @@ public class Hazards : MonoBehaviour {
     public void MapHazard()
     {
         //fill in array randomly. This array is used to instantiate and move boxes.
-        seed = Time.time.ToString();
-        System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+        //seed = System.DateTime.Now.ToString();
+        //System.Random pseudoRandom = new System.Random(seed.GetHashCode());
 
         for (int y = 0; y <= 70; y++)
         { 
@@ -420,10 +424,10 @@ public class Hazards : MonoBehaviour {
     public void MapCircles(int radius)
     {
         int creep = 0;
-        int gap = 10;     
+        int gap = 10;
         //randomize location of blocks
-        seed = Time.time.ToString();
-        System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+        //seed = System.DateTime.Now.ToString();
+        //System.Random pseudoRandom = new System.Random(seed.GetHashCode());
         //clear array
         for (int y = 0; y <= 70; y++)
         {
@@ -510,7 +514,8 @@ public class Hazards : MonoBehaviour {
         //        cuboid.transform.parent = gameObject.transform;
         //    //}
         //}
-        go = true;
+        if (total_disabled_boxes > 10)
+        { go = true; }
         //Debug.Log(mahRotation.transform.rotation.eulerAngles.x);
         //if there is enough available then recycle the box's back in
         if (go == true && Mathf.Abs(mahRotation.transform.rotation.eulerAngles.x - change) >= 0.2)
@@ -522,6 +527,7 @@ public class Hazards : MonoBehaviour {
 
                 if (hazardSectionOne[x,iteration] >= 1)
                 {
+                    change = mahRotation.transform.rotation.eulerAngles.x;
                     //Find the hazard locations in the world - layer 1
                     xLocalh = ((x * 5) - 250 + offset);
                     vStartHazards = new Vector3(xLocalh, bottomY, bottomZ);
@@ -618,17 +624,17 @@ public class Hazards : MonoBehaviour {
 
         if (go == true && Mathf.Abs(mahRotation.transform.rotation.eulerAngles.x - change) >= 0.2)
         {
+            change = mahRotation.transform.rotation.eulerAngles.x;
             if (funnelsize > size)
             {
-                change = mahRotation.transform.rotation.eulerAngles.x;
+
                 funnelsize = Funnel(funnelsize);
             }
             else
             {
-                change = mahRotation.transform.rotation.eulerAngles.x;
-
-                seed = Time.time.ToString();
-                System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+                //seed = System.DateTime.Now.ToString();
+                //Debug.Log(seed);
+                //System.Random pseudoRandom = new System.Random(seed.GetHashCode());
                 if ((slope >= target && sign >= 0) || (slope <= target && sign <= 0))
                 {
                     distance++;
@@ -698,8 +704,8 @@ public class Hazards : MonoBehaviour {
         {
             //Debug.Log("spitting");
             change = mahRotation.transform.rotation.eulerAngles.x;
-            seed = Time.time.ToString();
-            System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+            seed = System.DateTime.Now.ToString();
+            //System.Random pseudoRandom = new System.Random(seed.GetHashCode());
             //offset = -Mathf.Round(manager.fUserOffsetT);
             for (int x = left_border; x <= right_border; x++)
             {

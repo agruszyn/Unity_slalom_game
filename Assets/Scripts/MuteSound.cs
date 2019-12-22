@@ -20,7 +20,28 @@ public class MuteSound : MonoBehaviour
         sound = player.GetComponent<AudioSource>();
 
         //mute and unmute the sound on first load
-        sound.mute = (PlayerPrefs.GetInt("enable_sound") == 0);
+        if (PlayerPrefs.HasKey("volume"))
+        {
+            sound.volume = Mathf.Pow(PlayerPrefs.GetFloat("volume"), 2.0f);
+            Debug.Log(PlayerPrefs.GetFloat("volume"));
+        }
+        else
+        {
+            PlayerPrefs.SetFloat("volume", 0.3f);
+            Debug.Log(PlayerPrefs.GetFloat("volume"));
+            sound.volume = Mathf.Pow(0.3f, 2.0f);
+        }
+
+        //mute and unmute the sound on first load
+        if (PlayerPrefs.HasKey("enable_sound"))
+        {
+            sound.mute = (PlayerPrefs.GetInt("enable_sound") == 0);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("enable_sound", 1);
+            sound.mute = false;
+        }
 
         //Change icon texture
         icon = this.GetComponent<Image>();
