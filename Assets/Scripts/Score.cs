@@ -11,8 +11,9 @@ public class Score : MonoBehaviour
     private int framerate = 0;
     public int level = 0;
     public int total_level = 0;
+    public int rounds_In_Game = 0;
     public float multiplier = 1.0f;
-    private int level_Length = 300;
+    private int level_Length = 250;
     // Use this for initialization
     void Start()
     {
@@ -65,6 +66,7 @@ public class Score : MonoBehaviour
             {
                 multiplier += 0.2f;
                 level = 0;
+                rounds_In_Game += 1;
             }
 
         }

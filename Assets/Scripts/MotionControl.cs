@@ -56,7 +56,7 @@ public class MotionControl : MonoBehaviour {
         world = GetComponentInParent<Game_Master>();
         speed = hazard_rotator.GetComponent<TranslateObstacles>();
         skybox_controller = skybox.GetComponent<SkyboxCamera>();
-        strafeScale = jetSpeed * 0.012f;
+        strafeScale = jetSpeed * 0.013f;
         Input.gyro.enabled = !no_Gyro;
     }
     //void Update()
@@ -71,7 +71,7 @@ public class MotionControl : MonoBehaviour {
             jetSpeed = myScore.multiplier * startingjetSpeed;
             if (PlayerPrefs.GetFloat("jetSpeed") != jetSpeed)
             {
-                strafeScale = jetSpeed * 0.012f;
+                strafeScale = jetSpeed * 0.013f;
                 turn_speed = starting_turn_speed * myScore.multiplier;
                 skybox_rotation.x = base_skybox_rotation.x * myScore.multiplier;
                 skybox_controller.SetSkyBoxRotation(skybox_rotation);

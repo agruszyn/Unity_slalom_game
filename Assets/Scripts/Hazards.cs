@@ -5,9 +5,12 @@ using System.Collections.Generic;
 public class Hazards : MonoBehaviour {
 
     private string seed;
-    public int randomFillPercent = 25;
-    public int percentLayerTwo = 4;
-    public int percentLayerThree = 4;
+    public int base_Random_Fill_Layer_One = 4;
+    public int base_Random_Fill_Layer_Two = 10;
+    public int base_Random_Fill_Layer_Three = 8;
+    private int active_Random_Fill_Layer_One;
+    private int active_Random_Fill_Layer_Two;
+    private int active_Random_Fill_Layer_Three;
     public Quaternion qHazardRotation;
     Vector3 vStartHazards;
     public float xLocalh;
@@ -37,9 +40,12 @@ public class Hazards : MonoBehaviour {
     float startpos = 0.0f;
     bool firstcycle = false;
     int starting_box_count = 100;//349
-    public int randomFillPercen_spitting = 5;
-    public int percentLayerTwo_spitting = 5;
-    public int percentLayerThree_spitting = 5;
+    public int base_Random_Spitting_Fill_Layer_One = 5;
+    public int base_Random_Spitting_Fill_Layer_Two = 10;
+    public int base_Random_Spitting_Fill_Layer_Three = 8;
+    public int active_Random_Spitting_Fill_Layer_One;
+    public int active_Random_Spitting_Fill_Layer_Two;
+    public int active_Random_Spitting_Fill_Layer_Three;
 
     const float tileWidth = 20.944f;
     const float tileLength = 41.88714f;
@@ -62,6 +68,7 @@ public class Hazards : MonoBehaviour {
     private GameObject box_marked_for_deletion;
     private float offset = 0;
     public int hazardlevel;
+    public int rounds_In_Game;
     public float change;
     public bool go = false;
 
@@ -78,6 +85,12 @@ public class Hazards : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        active_Random_Fill_Layer_One = base_Random_Fill_Layer_One;
+        active_Random_Fill_Layer_Two = base_Random_Fill_Layer_Two;
+        active_Random_Fill_Layer_Three = base_Random_Fill_Layer_Three;
+        active_Random_Spitting_Fill_Layer_One = base_Random_Spitting_Fill_Layer_One;
+        active_Random_Spitting_Fill_Layer_Two = base_Random_Spitting_Fill_Layer_Two;
+        active_Random_Spitting_Fill_Layer_Three = base_Random_Spitting_Fill_Layer_Three;
         seed = System.DateTime.Now.ToString();
         pseudoRandom = new System.Random(seed.GetHashCode());
         newRow = 101;
@@ -130,6 +143,12 @@ public class Hazards : MonoBehaviour {
                 cycle = 0;
             }
             hazardlevel = level.level;
+            rounds_In_Game = level.rounds_In_Game;
+            if (rounds_In_Game < 10)
+            {
+                active_Random_Fill_Layer_One = base_Random_Fill_Layer_One + rounds_In_Game;
+                active_Random_Spitting_Fill_Layer_One = base_Random_Spitting_Fill_Layer_One + rounds_In_Game;
+            }
                 if (head.starthover != true)
                 {
                     // RecycleHazard();
@@ -229,7 +248,7 @@ public class Hazards : MonoBehaviour {
         {
             for (int z = 30; z <= hazard_enable_distance_to_player; z++)
             {
-                if (pseudoRandom.Next(0, 100) < randomFillPercent)
+                if (pseudoRandom.Next(0, 100) < active_Random_Fill_Layer_One)
                 {
                     //aiObstacle[x, z] = 1;
                     qHazardRotation.eulerAngles = new Vector3((int)(z * cubedegree), 0, 0);
@@ -243,7 +262,7 @@ public class Hazards : MonoBehaviour {
                     var cuboid = Instantiate(hazard, vStartHazards, qHazardRotation) as GameObject;
                    cuboid.transform.parent = gameObject.transform;
 
-                    if (pseudoRandom.Next(0, 100) < percentLayerTwo)
+                    if (pseudoRandom.Next(0, 100) < active_Random_Fill_Layer_Two)
                     {
                         yLocalh = GetOrientedy((float)(z), 2);
                         zLocalh = GetOrientedz((float)(z), 2);
@@ -251,7 +270,7 @@ public class Hazards : MonoBehaviour {
                         cuboid = Instantiate(hazard, new Vector3(vStartHazards.x, vStartHazards.y, vStartHazards.z), qHazardRotation) as GameObject;
                         cuboid.transform.parent = gameObject.transform;
 
-                        if (pseudoRandom.Next(0, 100) < percentLayerThree)
+                        if (pseudoRandom.Next(0, 100) < active_Random_Fill_Layer_Three)
                         {
                             yLocalh = GetOrientedy((float)(z), 3);
                             zLocalh = GetOrientedz((float)(z), 3);
@@ -402,15 +421,15 @@ public class Hazards : MonoBehaviour {
         { 
         for (int x = left_border; x <= right_border; x++)
             {
-                if (pseudoRandom.Next(0, 100) < randomFillPercent)
+                if (pseudoRandom.Next(0, 100) < active_Random_Fill_Layer_One)
                 {
                     hazardSectionOne[x, y] = 1;
                     //layer 2
-                    if (pseudoRandom.Next(0, 100) < percentLayerTwo)
+                    if (pseudoRandom.Next(0, 100) < active_Random_Fill_Layer_Two)
                     {
                         hazardSectionOne[x, y] = 2;
                         //layer 3
-                        if (pseudoRandom.Next(0, 100) < percentLayerThree)
+                        if (pseudoRandom.Next(0, 100) < active_Random_Fill_Layer_Three)
                         {
                             hazardSectionOne[x, y] = 3;
                         }
@@ -709,7 +728,7 @@ public class Hazards : MonoBehaviour {
             //offset = -Mathf.Round(manager.fUserOffsetT);
             for (int x = left_border; x <= right_border; x++)
             {
-                if (pseudoRandom.Next(0, 100) < randomFillPercen_spitting)
+                if (pseudoRandom.Next(0, 100) < active_Random_Spitting_Fill_Layer_One)
                 {
                     //Find the hazard locations in the world
                     xLocalh = ((x * 5) - 250 + offset);
@@ -725,7 +744,7 @@ public class Hazards : MonoBehaviour {
                     oFall.SendMessage("MoveTo", transform.InverseTransformPoint(vStartHazards));
                     box.tag = "enabled";
 
-                        if (pseudoRandom.Next(0, 100) < percentLayerTwo_spitting)
+                        if (pseudoRandom.Next(0, 100) < active_Random_Spitting_Fill_Layer_Two)
                         {
                             xLocalh = ((x * 5) - 250 + offset);
                             vStartHazards = new Vector3(xLocalh, middleY, middleZ);
@@ -739,7 +758,7 @@ public class Hazards : MonoBehaviour {
                             oFall.SendMessage("MoveTo", transform.InverseTransformPoint(vStartHazards));
                             box.tag = "enabled";
 
-                            if (pseudoRandom.Next(0, 100) < percentLayerThree_spitting)
+                            if (pseudoRandom.Next(0, 100) < active_Random_Spitting_Fill_Layer_Three)
                             {
                                 xLocalh = ((x * 5) - 250 + offset);
                                 vStartHazards = new Vector3(xLocalh, topY, topZ);

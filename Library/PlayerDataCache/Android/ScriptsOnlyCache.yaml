@@ -5,6 +5,7 @@ ScriptsOnlyBuild:
     - Debugging
     - EternalVariables
     - Falling
+    - Flash_Text
     - GameManager
     - Game_Master
     - Hazards
@@ -346,6 +347,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 14046}
     - Class: 114
       Script: {instanceID: 14096}
+    - Class: 114
+      Script: {instanceID: 17156}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -678,7 +681,7 @@ ScriptsOnlyBuild:
     className: GridLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: 06887d60daefe07001ba0692b6980662
+      Hash: 55018664254347639b5b7812e18b541f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Hazards
@@ -1242,7 +1245,7 @@ ScriptsOnlyBuild:
     className: AudioTrack
   - hash:
       serializedVersion: 2
-      Hash: 3c87ef31c02dcf5aa7725b04625452bb
+      Hash: 030bbb94cb19396ba9ad14569ee60d28
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Score
@@ -1546,6 +1549,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Flash_Text
   platform: 13
   scenePathNames:
   - Assets/Scenes/menu.unity
@@ -1553,4 +1562,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/Scoreboard.unity
   - Assets/Scenes/Settings.unity
   playerPath: /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle
-    Navigator Mk. II/demo_22DEC2019_2330.apk
+    Navigator Mk. II/demo_23DEC2019_1340.apk

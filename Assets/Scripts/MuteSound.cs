@@ -23,13 +23,11 @@ public class MuteSound : MonoBehaviour
         if (PlayerPrefs.HasKey("volume"))
         {
             sound.volume = Mathf.Pow(PlayerPrefs.GetFloat("volume"), 2.0f);
-            Debug.Log(PlayerPrefs.GetFloat("volume"));
         }
         else
         {
-            PlayerPrefs.SetFloat("volume", 0.3f);
-            Debug.Log(PlayerPrefs.GetFloat("volume"));
-            sound.volume = Mathf.Pow(0.3f, 2.0f);
+            PlayerPrefs.SetFloat("volume", 0.4f);
+            sound.volume = Mathf.Pow(0.4f, 2.0f);
         }
 
         //mute and unmute the sound on first load

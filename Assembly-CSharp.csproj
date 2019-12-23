@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\Debugging.cs" />
      <Compile Include="Assets\Scripts\EternalVariables.cs" />
      <Compile Include="Assets\Scripts\Falling.cs" />
+     <Compile Include="Assets\Scripts\Flash_Text.cs" />
      <Compile Include="Assets\Scripts\FollowPlayer.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\Game_Master.cs" />

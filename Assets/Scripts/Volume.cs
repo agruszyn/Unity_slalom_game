@@ -14,7 +14,6 @@ public class Volume : MonoBehaviour
         player = GameObject.Find("PlayerCharacter");
         my_audio = player.GetComponent<AudioSource>();
         my_slider = GetComponent<Slider>();
-        Debug.Log("volume script " + Mathf.Sqrt(PlayerPrefs.GetFloat("volume")));
         my_slider.value = PlayerPrefs.GetFloat("volume");
         my_slider.onValueChanged.AddListener(OnValueChanged);
     }
