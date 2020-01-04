@@ -455,6 +455,12 @@
  <Reference Include="UnityEngine.XRModule">
  <HintPath>/home/tony/Unity/Hub/Editor/2019.3.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEngine.Monetization.Editor">
+ <HintPath>/home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Assets/UnityAds/UnityEngine.Monetization.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Advertisements.Editor">
+ <HintPath>/home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Assets/UnityAds/UnityEngine.Advertisements.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.Analytics.Editor">
  <HintPath>/home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Editor.dll</HintPath>
  </Reference>

@@ -9,6 +9,11 @@ package com.unity3d.player;
 public final class R {
     private R() {}
 
+    public static final class string {
+        private string() {}
+
+        public static final int app_name = 0x7f030000;
+    }
     public static final class style {
         private style() {}
 

@@ -144,7 +144,7 @@ public class Hazards : MonoBehaviour {
             }
             hazardlevel = level.level;
             rounds_In_Game = level.rounds_In_Game;
-            if (rounds_In_Game < 10)
+            if (rounds_In_Game < 8)
             {
                 active_Random_Fill_Layer_One = base_Random_Fill_Layer_One + rounds_In_Game;
                 active_Random_Spitting_Fill_Layer_One = base_Random_Spitting_Fill_Layer_One + rounds_In_Game;

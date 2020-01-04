@@ -5,6 +5,8 @@ INJECTED from /home/tony/Downloads/reference_project/drive-download-20191207T214
 INJECTED from /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/launcher/src/main/AndroidManifest.xml:3:1-6:12
 INJECTED from /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/launcher/src/main/AndroidManifest.xml:3:1-6:12
 MERGED from [:unityLibrary] /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/unityLibrary/build/intermediates/library_manifest/release/AndroidManifest.xml:2:1-65:12
+MERGED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:2:1-37:12
+MERGED from [:UnityAdsAndroidPlugin:] /home/tony/.gradle/caches/transforms-2/files-2.1/eb5670a73c37f23b2b3af279b71bf1bf/AndroidManifest.xml:2:1-11:12
 INJECTED from /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/launcher/src/main/AndroidManifest.xml:3:1-6:12
 INJECTED from /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/launcher/src/main/AndroidManifest.xml:3:1-6:12
 INJECTED from /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/launcher/src/main/AndroidManifest.xml:3:1-6:12
@@ -42,6 +44,8 @@ application
 ADDED from /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/launcher/src/main/AndroidManifest.xml:5:3-121
 MERGED from [:unityLibrary] /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/unityLibrary/build/intermediates/library_manifest/release/AndroidManifest.xml:31:5-63:19
 MERGED from [:unityLibrary] /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/unityLibrary/build/intermediates/library_manifest/release/AndroidManifest.xml:31:5-63:19
+MERGED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:14:5-35:19
+MERGED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:14:5-35:19
 	android:label
 		ADDED from /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/launcher/src/main/AndroidManifest.xml:5:16-48
 	android:icon
@@ -56,6 +60,10 @@ INJECTED from /home/tony/Downloads/reference_project/drive-download-20191207T214
 INJECTED from /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/launcher/src/main/AndroidManifest.xml
 MERGED from [:unityLibrary] /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/unityLibrary/build/intermediates/library_manifest/release/AndroidManifest.xml:7:5-9:41
 MERGED from [:unityLibrary] /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/unityLibrary/build/intermediates/library_manifest/release/AndroidManifest.xml:7:5-9:41
+MERGED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:7:5-9:41
+MERGED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:7:5-9:41
+MERGED from [:UnityAdsAndroidPlugin:] /home/tony/.gradle/caches/transforms-2/files-2.1/eb5670a73c37f23b2b3af279b71bf1bf/AndroidManifest.xml:7:5-9:41
+MERGED from [:UnityAdsAndroidPlugin:] /home/tony/.gradle/caches/transforms-2/files-2.1/eb5670a73c37f23b2b3af279b71bf1bf/AndroidManifest.xml:7:5-9:41
 INJECTED from /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/launcher/src/main/AndroidManifest.xml
 INJECTED from /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/launcher/src/main/AndroidManifest.xml
 	android:targetSdkVersion
@@ -76,6 +84,8 @@ ADDED from [:unityLibrary] /home/tony/Downloads/reference_project/drive-download
 		ADDED from [:unityLibrary] /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/unityLibrary/build/intermediates/library_manifest/release/AndroidManifest.xml:13:19-51
 uses-permission#android.permission.INTERNET
 ADDED from [:unityLibrary] /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/unityLibrary/build/intermediates/library_manifest/release/AndroidManifest.xml:15:5-67
+MERGED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:12:5-67
+MERGED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:12:5-67
 	android:name
 		ADDED from [:unityLibrary] /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/unityLibrary/build/intermediates/library_manifest/release/AndroidManifest.xml:15:22-64
 uses-permission#android.permission.CHANGE_WIFI_MULTICAST_STATE
@@ -158,3 +168,47 @@ ADDED from [:unityLibrary] /home/tony/Downloads/reference_project/drive-download
 		ADDED from [:unityLibrary] /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/unityLibrary/build/intermediates/library_manifest/release/AndroidManifest.xml:62:13-65
 	android:name
 		ADDED from [:unityLibrary] /home/tony/Downloads/reference_project/drive-download-20191207T214903Z-001/Obstacle Navigator Mk. II/Temp/gradleOut/unityLibrary/build/intermediates/library_manifest/release/AndroidManifest.xml:61:13-42
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:11:5-79
+	android:name
+		ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:11:22-76
+activity#com.unity3d.services.ads.adunit.AdUnitActivity
+ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:15:9-19:74
+	android:hardwareAccelerated
+		ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:18:13-47
+	android:configChanges
+		ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:17:13-170
+	android:theme
+		ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:19:13-71
+	android:name
+		ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:16:13-74
+activity#com.unity3d.services.ads.adunit.AdUnitTransparentActivity
+ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:20:9-24:86
+	android:hardwareAccelerated
+		ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:23:13-47
+	android:configChanges
+		ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:22:13-170
+	android:theme
+		ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:24:13-83
+	android:name
+		ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:21:13-85
+activity#com.unity3d.services.ads.adunit.AdUnitTransparentSoftwareActivity
+ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:25:9-29:86
+	android:hardwareAccelerated
+		ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:28:13-48
+	android:configChanges
+		ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:27:13-170
+	android:theme
+		ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:29:13-83
+	android:name
+		ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:26:13-93
+activity#com.unity3d.services.ads.adunit.AdUnitSoftwareActivity
+ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:30:9-34:74
+	android:hardwareAccelerated
+		ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:33:13-48
+	android:configChanges
+		ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:32:13-170
+	android:theme
+		ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:34:13-71
+	android:name
+		ADDED from [:UnityAds:] /home/tony/.gradle/caches/transforms-2/files-2.1/555f8e5a22d27f2a080250be0283e16e/AndroidManifest.xml:31:13-82

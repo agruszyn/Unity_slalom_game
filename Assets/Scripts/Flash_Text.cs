@@ -26,7 +26,7 @@ public class Flash_Text : MonoBehaviour
 
     void Update()
     {
-        if (previous_round != score.rounds_In_Game && (score.rounds_In_Game < 10 || gameObject.name == "SPEED++")) 
+        if (previous_round != score.rounds_In_Game && (score.rounds_In_Game < 8 || gameObject.name == "SPEED++")) 
         {
             previous_round = score.rounds_In_Game;
             start_flashing = true;
