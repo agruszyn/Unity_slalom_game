@@ -6,7 +6,7 @@
       <File FileName="Assets/Scripts/MuteSound.cs" Line="24" Column="10" />
       <File FileName="Assets/Scripts/Hazards.cs" Line="112" Column="19" />
       <File FileName="Assets/Scripts/SkyboxCamera.cs" Line="29" Column="13" />
-      <File FileName="Assets/Scripts/EternalVariables.cs" Line="44" Column="49" />
+      <File FileName="Assets/Scripts/EternalVariables.cs" Line="44" Column="25" />
       <File FileName="Assets/Scripts/buttonLogic.cs" Line="45" Column="41" />
       <File FileName="Assets/Scripts/menu.cs" Line="43" Column="45" />
       <File FileName="Assets/Scripts/toggleGyro.cs" Line="8" Column="41" />

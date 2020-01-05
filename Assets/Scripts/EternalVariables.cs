@@ -18,7 +18,7 @@ public class EternalVariables : MonoBehaviour
     string videoId = "video";
     bool testMode = false;
     bool enablePerPlacementLoad = true;
-    public string placementId = "New_Game";
+    public string placementId = "Banner";
     public int adRotation;
 
     void Awake()
@@ -37,9 +37,9 @@ public class EternalVariables : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        testMode = false;
         adRotation = 0;
         Advertisement.Initialize(gameId, testMode);
-
         PlayerPrefs.SetInt("pause", 0);
         headset = false;
         cardboard = GameObject.Find("Cardboard");
@@ -67,10 +67,12 @@ public class EternalVariables : MonoBehaviour
     {
         while (!Advertisement.IsReady(placementId))
         {
+            Debug.Log("waiting for banner. . .");
             yield return new WaitForSeconds(0.5f);
         }
         Debug.Log("show ad");
         Advertisement.Banner.Show(placementId);
+
     }
 
     IEnumerator ShowVideoWhenReady()
@@ -111,21 +113,21 @@ public class EternalVariables : MonoBehaviour
             {
                 if (adRotation < 3)
                 {
-                    Advertisement.Load(placementId);
-                    Advertisement.Banner.SetPosition(BannerPosition.TOP_CENTER);
+                    //Advertisement.Load(placementId);
+                    Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
                     StartCoroutine(ShowBannerWhenReady());
                     adRotation += 1;
                 }
                 else if (adRotation == 3)
                 {
                     StartCoroutine(ShowVideoWhenReady());
-                    Advertisement.Load(videoId);
+                    //Advertisement.Load(videoId);
                     adRotation += 1;
                 }
                 else if (adRotation >= 4)
                 {
-                    Advertisement.Load(placementId);
-                    Advertisement.Banner.SetPosition(BannerPosition.TOP_CENTER);
+                    //Advertisement.Load(placementId);
+                    Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
                     StartCoroutine(ShowBannerWhenReady());
                     adRotation = 1;
                 }
